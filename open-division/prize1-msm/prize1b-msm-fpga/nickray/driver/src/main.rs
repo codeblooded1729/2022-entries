@@ -10,7 +10,7 @@ fn main() {
     let (points, scalars) = random_points(size);
     let mut context = multi_scalar_mult_init(points.as_slice());
     let _out = multi_scalar_mult(&mut context, points.as_slice(), scalars.as_slice());
-    println!()
+    println!("This worked!");
 }
 
 pub fn random_points(size: u8) -> (Vec<G1Affine_ark>, Vec<BigInt>) {
