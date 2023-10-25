@@ -27,7 +27,7 @@ timings = []
 ark-std = { version = "0.3", default-features = false }
 rayon = { version = "1.5.3" }
 
-our-bls12-377 = { package = "ark-bls12-377", path = "../bls12-377" }
+our-bls12-377 = { package = "ark-bls12-377", path = "../bls12-377"}
 our-ec = { path = "../algebra/ec", package = "ark-ec", default-features = false }
 our-ff = { path = "../algebra/ff", package = "ark-ff", default-features = false }
 
