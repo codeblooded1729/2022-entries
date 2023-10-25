@@ -1308,9 +1308,7 @@ version = "0.1.0"
 dependencies = [
  "ark-bls12-377 0.3.0",
  "ark-bls12-377 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "ark-ec 0.3.0",
  "ark-ec 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "ark-ff 0.3.0",
  "ark-ff 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "ark-std",
  "fpga",

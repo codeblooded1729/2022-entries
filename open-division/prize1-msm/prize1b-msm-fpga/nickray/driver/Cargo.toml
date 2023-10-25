@@ -28,5 +28,3 @@ rand_core = { version = "0.6", features = ["getrandom"] }
 fpga = { path = "./fpga" }
 msm-fpga = { path = "./msm", features = ["hw"] }
 our-bls12-377 = { package = "ark-bls12-377",  path = "./bls12-377" }
-our-ec = { path = "./algebra/ec", package = "ark-ec", default-features = false }
-our-ff = { path = "./algebra/ff", package = "ark-ff", default-features = false }
