@@ -1,7 +1,7 @@
 use core::mem::transmute;
 
-use ark_ec::AffineCurve;
-use ark_ff::PrimeField;
+use our_ec::AffineCurve;
+use our_ff::PrimeField;
 use std::os::raw::c_void;
 
 use fpga::F1;
@@ -16,7 +16,7 @@ struct Context {
     app: App,
 }
 
-pub fn multi_scalar_mult_init<G: AffineCurve>(points: &[G]) -> MultiScalarMultContext {
+pub fn multi_scalar_mult_init(points: &[our_bls12_377::G1Affine]) -> MultiScalarMultContext {
     let size = ark_std::log2(points.len());
     assert_eq!(points.len(), 1 << size);
     assert!(size <= 26);
@@ -25,7 +25,7 @@ pub fn multi_scalar_mult_init<G: AffineCurve>(points: &[G]) -> MultiScalarMultCo
     let mut app = App::new(f1, size as u8);
 
     // get rid of the generic parameter, this is a specific implementation
-    let points: &[our_bls12_377::G1Affine] = unsafe { transmute(points) };
+    // let points: &[our_bls12_377::G1Affine] = unsafe { transmute(points) };
     let points = msm_fpga::preprocess_points(points);
     app.set_preprocessed_points(&points);
 
@@ -37,11 +37,11 @@ pub fn multi_scalar_mult_init<G: AffineCurve>(points: &[G]) -> MultiScalarMultCo
     }
 }
 
-pub fn multi_scalar_mult<G: AffineCurve>(
+pub fn multi_scalar_mult(
     context: &mut MultiScalarMultContext,
-    points: &[G],
-    scalars: &[<G::ScalarField as PrimeField>::BigInt],
-) -> Vec<G::Projective> {
+    points: &[our_bls12_377::G1Affine],
+    scalars: &[<<our_bls12_377::G1Affine as AffineCurve>::ScalarField as PrimeField>::BigInt],
+) -> Vec<our_bls12_377::G1Projective> {
     let context: &mut Context = unsafe { &mut *(context.context as *mut Context) };
     let scalars: &[Scalar] = unsafe { transmute(scalars) };
     let len = context.app.len();

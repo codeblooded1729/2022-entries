@@ -1,9 +1,9 @@
-use ark_bls12_377::{G1Affine as G1Affine_ark, G1Projective as G1Projective_ark};
-use ark_ec::AffineCurve;
-use ark_ff::PrimeField;
+use our_ec::AffineCurve;
+use our_ff::PrimeField;
 use ark_std::rand;
+use our_bls12_377::{ G1Affine, G1Projective} ;
 use zprize_fpga_msm::{multi_scalar_mult, multi_scalar_mult_init};
-type BigInt = <<G1Affine_ark as AffineCurve>::ScalarField as PrimeField>::BigInt;
+type BigInt = <<G1Affine as AffineCurve>::ScalarField as PrimeField>::BigInt;
 fn main() {
     // num points generated will be 1 << size
     let size = 3;
@@ -13,16 +13,16 @@ fn main() {
     println!("This worked!");
 }
 
-pub fn random_points(size: u8) -> (Vec<G1Affine_ark>, Vec<BigInt>) {
+pub fn random_points(size: u8) -> (Vec<G1Affine>, Vec<BigInt>) {
     use rand_core::SeedableRng;
     let mut rng = rand::prelude::StdRng::from_entropy();
 
     use ark_std::UniformRand;
     let points: Vec<_> = (0..(1 << size))
-        .map(|_| G1Projective_ark::rand(&mut rng))
+        .map(|_| G1Projective::rand(&mut rng))
         .collect();
     let scalars: Vec<BigInt> = (0..(1 << size)).map(|_| BigInt::rand(&mut rng)).collect();
-    use ark_ec::ProjectiveCurve;
-    let points = G1Projective_ark::batch_normalization_into_affine(&points);
+    use our_ec::ProjectiveCurve;
+    let points = G1Projective::batch_normalization_into_affine(&points);
     (points, scalars)
 }
